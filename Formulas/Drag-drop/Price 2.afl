@@ -1,0 +1,30 @@
+_SECTION_BEGIN("Price");
+SetChartOptions(0,chartShowArrows|chartShowDates);
+_N(Title = StrFormat("{{NAME}} - {{INTERVAL}} {{DATE}} Open %g, Hi %g, Lo %g, Close %g (%.1f%%) {{VALUES}}", O, H, L, C, SelectedValue( ROC( C, 1 ) ) ));
+Plot( C, "Close", ParamColor("Color", colorDefault ), styleNoTitle | ParamStyle("Style") | GetPriceStyle() ); 
+_SECTION_END();
+
+_SECTION_BEGIN("test_signal");
+//Test Signal MA
+//03Feb2019
+
+Period = Param("Period",20,10,200,1);
+MAClose = MA(Close,Period);
+
+Plot(Close,"Close Price",colorRed,styleLine);
+Plot(MA(Close,Period),"MA20",colorGreen,styleLine);
+
+SetTradeDelays(1,1,0,0);
+//Entry
+	//Buy = Close > MAClose;
+	Buy = Cross(Close,MA(Close,20));
+//Sell
+	//Sell = Close <= MAClose;
+	Sell = Cross(MA(Close,20),Close);
+	
+	Buy = ExRem(Buy,Sell);
+	Sell = ExRem(Sell,Buy);
+	
+PlotShapes(Buy*shapeUpArrow,colorGreen,0,Low);
+PlotShapes(Sell*shapeDownArrow,colorRed,0,High);
+_SECTION_END();

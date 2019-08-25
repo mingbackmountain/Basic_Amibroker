@@ -1,0 +1,40 @@
+_SECTION_BEGIN("test_signal");
+//Test Signal MA
+//03Feb2019
+
+Plot(Close,"Close Price",colorRed,styleLine);
+Plot(MA(Close,20),"MA20",colorGreen,styleLine);
+
+SetTradeDelays(1,1,0,0);
+//Entry
+	Buy = Close > MA(C,20);
+	//Buy = Cross(Close,MA(Close,20));
+//Sell
+	Sell = Close <= MA(C,20);
+	//Sell = Cross(MA(Close,20),Close);
+	
+PlotShapes(Buy*shapeUpArrow,colorGreen,0,Low);
+PlotShapes(Buy*shapeDownArrow,colorRed,0,High);
+_SECTION_END();
+
+_SECTION_BEGIN("test_signal1");
+//Test Signal MA
+//03Feb2019
+
+Plot(Close,"Close Price",colorRed,styleLine);
+Plot(MA(Close,20),"MA20",colorGreen,styleLine);
+
+SetTradeDelays(1,1,0,0);
+//Entry
+	Buy = Close > MA(C,20);
+	//Buy = Cross(Close,MA(Close,20));
+//Sell
+	Sell = Close <= MA(C,20);
+	//Sell = Cross(MA(Close,20),Close);
+	
+	Buy = ExRem(Buy,Sell);
+	Sell = ExRem(Sell,Buy);
+	
+PlotShapes(Buy*shapeUpArrow,colorGreen,0,Low);
+PlotShapes(Buy*shapeDownArrow,colorRed,0,High);
+_SECTION_END();

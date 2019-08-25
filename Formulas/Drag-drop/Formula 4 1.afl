@@ -1,0 +1,10 @@
+_SECTION_BEGIN("Formula 4");
+//BuyandSell Strategy
+
+Period = Param("Period",50,10,100,1);
+MACDClose = MACD(10,50);
+
+Plot(Close,"Close Price",colorRed,styleLine);
+Plot(MACDClose,"MACD",colorGreen,styleHistogram);
+SetTradeDelays(1,1,0,0);
+_SECTION_END();

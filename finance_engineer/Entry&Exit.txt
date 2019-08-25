@@ -1,0 +1,2 @@
+Buy the stock when MACD < 10
+Sell the stock when MACD > 10
